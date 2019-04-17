@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'vacker360_admin.urls'
+ROOT_URLCONF = 'admin_panel.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'vacker360_admin.wsgi.application'
+WSGI_APPLICATION = 'admin_panel.wsgi.application'
 
 
 # Database

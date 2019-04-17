@@ -19,7 +19,7 @@ from django.db.models.query_utils import Q
 from django.db.models import Count
 
 from monitoringapp.forms import PasswordResetRequestForm,SetPasswordForm,UserForm
-from vacker360_admin import settings
+from admin_panel import settings
 from django.contrib.auth.hashers import make_password
 
 from django.contrib.auth.decorators import login_required
