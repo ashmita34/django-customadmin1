@@ -1,0 +1,36 @@
+{% extends "monitoringapp/base/base-admin.html"  %}
+
+{% block content %}
+
+<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <a href="/360admin/users">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <i class="fa fa-user fa-fw" style="font-size:140px;"></i>
+                            </div>
+                            
+                                <div class="panel-footer">
+                                    <span class="pull-left">Users Management</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            
+                        </div>
+                    </a>
+                </div>
+               
+            </div>
+            <!-- /.row -->
+            
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}

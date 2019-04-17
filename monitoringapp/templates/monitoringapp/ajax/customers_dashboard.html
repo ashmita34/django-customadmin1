@@ -1,0 +1,137 @@
+{% extends "monitoringapp/base/base-ajax.html"  %}
+{% block content %}
+{% load mathfilters %}
+ 
+<body onload = "check_play();">
+    <div class="panel-body">
+
+<table class="table table-striped table-bordered table-hover" id="dataTables-customers-dashboard">
+<thead>
+   
+        
+    <tr>
+        <th>Sn No</th>
+        <th>Location</th>
+        <th>Play/Mute</th>
+        <th>AC Power</th>
+        <th>Controller Power</th>
+        <th>UPS power</th>
+        <th>Humidity</th>
+        <th>Temperature</th>
+        <th>Min_Humidity</th>
+        <th>Max_Humidity</th>
+        <th>Min_Temperature</th>
+        <th>Max_Temperature</th>
+    </tr>
+
+</thead>
+<tbody>
+
+    {% for customer in customers %}
+        <tr class="odd gradeX">
+            <td>{{forloop.counter}}</td>
+                         
+            
+            <td>{{customer.location}}</td>
+           
+            <td id= "alert">
+            {% if customer.play_mute %}
+                <input type="button"  value="OK" onclick="" id="btn_{{forloop.counter}}" class="btn btn-success">
+            {% else %}
+                <input type="button"  value="MUTE" onclick="play_mute(this.id);" id="btn_{{forloop.counter}}" class="btn btn-danger">
+            {% endif %}
+            </td>
+            <td>{% if customer.ac_power == "None" %} N/A {% elif customer.ac_power %} ON {% else %} OFF {% endif %}</td>
+            <td>{% if customer.controller_power == "None" %} N/A {% elif customer.controller_power %} ON {% else %} OFF {% endif %}</td>
+            <td>{% if customer.ups_power == "None" %} N/A {% elif customer.ups_power %} ON {% else %} OFF {% endif %}</td>
+            <td>{% if customer.humidity %} {{customer.humidity|div:10}} {% else %} N/A  {%endif%}</td>
+            <td>{{customer.temperature|div:1000 }}</td>
+            <td>{{customer.min_humidity|div:10}}</td>
+            <td>{{customer.max_humidity|div:10}}</td>
+            <td>{{customer.min_temperature|div:1000}}</td>
+            <td>{{customer.max_temperature|div:1000}}</td>
+                    
+
+            <td><input type="hidden" value="{{customer.play_mute}}" id="val_btn_{{forloop.counter}}" class ="playcheck"></td>
+
+             
+
+        </tr>
+    {% empty %}
+        <p>There are no details</p>
+
+    {% endfor %}  
+</tbody>
+</table>
+
+</div>
+</body>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+var audio;
+var element;
+var table;
+var sound = false;
+
+function check_play(){
+     var table = document.getElementById("dataTables-example");
+     var conditions =  document.getElementsByClassName("playcheck");
+     var stateList= [] ;
+     for (var k = 0;k<conditions.length;k++){
+        stateList.push(conditions[k].value);
+    }
+    
+    if(stateList.includes("False")){
+        audioplay();
+        sound = true;
+    }
+    else{
+        audiopause();
+        sound = false;
+    }
+
+}
+
+function audioplay(){
+    var audio = document.getElementById("player");
+    audio.loop = true;
+    audio.play();
+}
+function audiopause(){
+     var audio = document.getElementById("player");
+    audio.pause();
+}
+
+function play_mute(id){
+    var play_button_value = document.getElementById(id);
+    document.getElementById(id).classList.toggle('btn-danger');
+    if (play_button_value.value == "MUTE"){
+                    document.getElementById(id).classList.remove("btn-success");
+                    document.getElementById(id).classList.add('btn-warning');
+                     play_button_value.value ="MUTED";
+                     document.getElementById("val_"+id).value = "True";
+                     
+                     check_play();
+                }
+            else{
+                play_button_value.value ="MUTE";
+                document.getElementById("val_"+id).value = "False";               
+
+                check_play();
+            }
+}
+
+</script>
+<script>
+    check_play();
+    $(document).ready(function() {
+        $('#dataTables-customers-dashboard').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+{% endblock%}

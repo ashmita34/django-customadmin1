@@ -1,0 +1,87 @@
+{% extends "monitoringapp/base/base-admin.html"  %}
+
+{% block content %}
+
+
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Add User</h1>
+                </div>
+            </div>
+                        
+                        <div class="panel-body">
+                <div class="row">
+                     
+                    <div class="col-lg-12">
+                                          
+                                                    
+                        <form role="form" method="POST">
+                            {% csrf_token %}
+
+                                {% if messages %}
+                                {% for message in messages %}
+                                  <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label>{{ user_form.first_name.label_tag }}</label>
+
+                                <input type="text" class="form-control" name="first_name" required="">
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ user_form.last_name.label_tag }}</label>
+                                {{ user_form.last_name.errors }}
+                                <input type="text" class="form-control" name="last_name" required="">
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <label>{{ customer_form.company.label_tag }}</label>
+                             {{ customer_form.company.errors }}
+                                <input type="text" class="form-control" name="company" required="">
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label>{{ customer_form.address.label_tag }}</label>
+                                {{ customer_form.address.errors }}
+                                <input type="text" class="form-control" name="address" required="">
+                            </div> -->
+                            <!-- <div class="form-group">
+                                <label>{{ customer_form.phone_number.label_tag }}</label>
+                                {{ customer_form.phone_number.errors }}
+                                <input type="text" class="form-control" name="phone_number" required="">
+                            </div>
+                            --> 
+                            <div class="form-group">
+                                <label>{{ user_form.username.label_tag }}</label>
+                                    {{ user_form.username.errors }}
+                                <input type="text" class="form-control" name="username" required="">
+                                <p class="help-block">{{ user_form.username.help_text }}</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ user_form.email.label_tag }}</label>
+                                {{ user_form.email.errors }}
+                                <input type="text" class="form-control" name="email" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>{{ user_form.password.label_tag }}</label>
+                                {{ user_form.password.errors }}
+                                <input type="password" class="form-control" name="password" required="" minlength="8">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+{% endblock %}

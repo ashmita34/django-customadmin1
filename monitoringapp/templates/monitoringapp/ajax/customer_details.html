@@ -1,0 +1,89 @@
+ {% extends "monitoringapp/base/base-ajax.html"  %}
+{% load mathfilters %}
+
+{% block content %}
+
+    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Location</th>
+                <th>Play/Mute</th>
+                <th>AC Power</th>
+                <th>Controller Power</th>
+                <th>UPS power</th>
+                <th>Humidity</th>                                        
+                <th>Temperature</th>
+                <th>Min_Humidity</th>
+                <th>Max_Humidity</th>
+                <th>Min_Temperature</th>
+                <th>Max_Temperature</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+
+                <tr class="odd gradeX">
+                	<td>{{ forloop.counter }}</td>
+                                 
+					
+                    <td>{{customer.location}}</td>
+                   <td>
+                   {% if customer.play_mute %}
+                    <button type="button" class="bth btn-success" >OK</button></td>
+                    {% else %}
+                    <button type="button" class="bth btn-danger "  >Playing</button></td>
+                    {% endif %}
+                    <td>{% if customer.ac_power == "None" %} N/A {% elif customer.ac_power  %} ON {% else %} OFF {% endif %}</td>
+                    <td>{% if customer.controller_power == "None" %} N/A {% elif customer.controller_power %} ON {% else %} OFF {% endif %}</td>
+                    <td>{% if customer.ups_power == "None" %} N/A {% elif customer.ups_power %} ON {% else %} OFF {% endif %}</td>
+                    <td>{% if customer.humidity %} {{customer.humidity|div:10}} {% else %} N/A  {%endif%}</td>
+                    <td>{{customer.temperature|div:1000 }}</td>	
+                    <td>{{customer.min_humidity|div:10}}</td>
+                    <td>{{customer.max_humidity|div:10}}</td>
+                    <td>{{customer.min_temperature|div:1000}}</td>
+                    <td>{{customer.max_temperature|div:1000}}</td>
+						
+                </tr>
+                
+            {% empty %}
+                {{ pass }}
+            {% endfor %}  
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+{% endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            

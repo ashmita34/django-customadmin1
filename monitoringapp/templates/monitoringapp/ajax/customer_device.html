@@ -1,0 +1,72 @@
+
+{% extends "monitoringapp/base/base-ajax.html"  %}
+{% load mathfilters %}
+
+{% block content %}
+    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-devices">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Location</th>
+                <th>Play/Mute</th>
+                <th>Ac Power</th>
+                <th>Controller Power</th>
+                <th>Ups power</th>
+                <th>Humidity</th>
+                <th>Temperature</th>
+                <th>Min_Humidity</th>
+                <th>Max_Humidity</th>
+                <th>Min_Temperature</th>
+                <th>Max_Temperature</th>
+                <th>Action</th>
+
+            </tr>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reading in readings %}
+                <tr class="odd gradeX">
+                    <td>{{reading.user.first_name}}
+                        {{reading.user.last_name}}
+                    <td>{{reading.location}}</td>
+                   <td>{{reading.play_mute}}</td>
+                    <td>{% if reading.ac_power == "None" %} N/A {% elif reading.ac_power %} ON {% else %} OFF {% endif %}</td>
+                    <td>{% if reading.controller_power == "None" %} N/A {% elif reading.controller_power %} ON {% else %} OFF {% endif %}</td>
+                    <td>{% if reading.ups_power == "None" %} N/A {% elif reading.ups_power  %} ON {% else %} OFF {% endif %}</td>
+                    <td>{% if reading.humidity %} {{reading.humidity|div:10}} {% else %} N/A  {%endif%}</td>
+                    <td>{{reading.temperature|div:1000}}</td>
+
+                    <td>{{reading.min_humidity}}</td>
+                    <td>{{reading.max_humidity}}</td>
+                    <td>{{reading.min_temperature|div:1000}}</td>
+                    <td>{{reading.max_temperature|div:1000}}</td>
+                    <td>
+                    <a href="{% url 'customer_settings' reading.user.username %}"> <button type="button" class="btn btn-success btn-circle"><i class="fa fa-link"></i>
+                    </button></a>
+                    </td>
+                </tr>
+            {% empty %}
+                <p>There are no readings.</p>
+            {% endfor %}  
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block extra_js %}
+
+<script>
+    $(document).ready(function() {
+        $('#dataTables-devices').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+{% endblock%}
+
+
+
+
+
+
+
+

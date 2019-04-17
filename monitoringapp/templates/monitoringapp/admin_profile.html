@@ -1,0 +1,90 @@
+{% extends "monitoringapp/base/base-admin.html"  %}
+{% include "monitoringapp/top/nav-top-admin.html"  %}
+
+{% block content %}
+
+<div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="page-header">Admin Profile | {{ user.first_name }} {{user.last_name}}</h2>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 <div class="panel-body">
+                <div class="row">
+                   
+                    <div class="col-lg-5">
+                <form role="form" method="POST">
+ 				{% csrf_token %}
+                   {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{message}} 
+                            </div>                                
+                            {% endfor %}
+                            </ul>
+                        {% endif %}        
+
+
+
+				
+				<div class="form-group">
+                                <label>{{ form.username.label_tag }}
+                                </label>
+                                {{ form.username.errors }}
+                                <input type="text" class="form-control" value= "{{ user.username}}" name="username" >
+                                <input type="hidden" class="form-control" value= "{{ user.username}}" name="username">
+                            </div>
+                            <div class="form-group">
+                                <label>{{ form.first_name.label_tag }}
+                                </label>
+                                {{ form.first_name.errors }}
+                                <input type="text" class="form-control"  value= "{{ user.first_name}}" name ="first_name" >
+                            </div>
+                            <div class="form-group">
+                                <label>{{ form.last_name.label_tag }}
+                                </label>
+                                {{ form.last_name.errors }}
+                                <input type="text" class="form-control" value= "{{ user.last_name}}" name="last_name">
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>{{ custom.phone_number.label_tag }}
+                                </label>
+                                {{ custom.phone_number.errors }}
+                                <input type="text" class="form-control"  value= "{{customer.phone_number}}" name="phone_number">
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ custom.company.label_tag }}
+                                </label>
+                                {{ custom.company.errors }}
+                                <input type="text" class="form-control"  value= "{{customer.company}}" name="company">
+                            </div>
+                            <div class="form-group">
+                                <label>{{ custom.address.label_tag }}
+                                </label>
+                                {{ custom.address.errors }}
+                                <input type="text" class="form-control" value= "{{customer.address}}" name="address">
+                            </div>
+ -->
+                            <div class="form-group">
+                                <label>{{ form.email.label_tag }}
+                                </label>
+                                {{ form.email.errors }}
+                                <input type="text" class="form-control" value= "{{user.email}}" name = "email">
+                                <input type="hidden" class="form-control" value= "{{ user.password}}" name = "password">
+                            </div>
+                            <center>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                </div>
+                            </center>
+                            
+   </form>
+
+</div>
+
+{% endblock %}
